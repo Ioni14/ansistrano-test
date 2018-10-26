@@ -1,7 +1,17 @@
 ---
 -
     hosts: prod
+    vars_prompt:
+        -
+            name: git_branch
+            prompt: 'Enter a branch to deploy'
+            default: master
+            private: no
     vars:
         ansistrano_deploy_to: "/home/ubuntu/project"
+        ansistrano_deploy_via: git
+        ansistrano_git_repo: git@github.com:Ioni14/ansistrano-test.git
+        ansistrano_git_branch: "{{ git_branch }}"
+        ansistrano_git_identity_key_path: "{{ playbook_dir }}/id_rsa"
     roles:
         - ansistrano.deploy
