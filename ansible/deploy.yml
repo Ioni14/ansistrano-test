@@ -1,0 +1,7 @@
+---
+-
+    hosts: prod
+    vars:
+        ansistrano_deploy_to: "/home/ubuntu/project"
+    roles:
+        - ansistrano.deploy

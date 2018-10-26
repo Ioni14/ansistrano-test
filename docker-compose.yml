@@ -1,0 +1,25 @@
+version: '3'
+networks:
+    app: ~
+services:
+    php:
+        build:
+            context: ./docker/php
+        hostname: php
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        networks:
+            - app
+    apache:
+        image: httpd:2.4
+        hostname: apache
+        volumes:
+            - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            - ./:/var/www/html
+        environment:
+            - PHP_HANDLER_HOST=php:9000
+        networks:
+            - app
+        ports:
+            - 80:80

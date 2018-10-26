@@ -1,0 +1,2 @@
+- src: ansistrano.deploy
+  version: 2.11.0
