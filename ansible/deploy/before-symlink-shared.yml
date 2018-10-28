@@ -1,0 +1,13 @@
+---
+-
+    name: Delete old docker containers
+    command: /snap/bin/docker container rm -f `/snap/bin/docker container ls -a -q`
+    register: cmd_out
+-
+    debug: var=cmd_out.stdout_lines
+-
+    name: Delete old docker networks
+    command: /snap/bin/docker network rm `/snap/bin/docker network ls -q`
+    register: cmd_out
+-
+    debug: var=cmd_out.stdout_lines

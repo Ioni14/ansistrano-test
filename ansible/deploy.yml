@@ -1,6 +1,8 @@
 ---
 -
     hosts: prod
+    vars_files:
+        - ./vars/deploy_vault.yml
     vars_prompt:
         -
             name: git_branch
@@ -13,5 +15,7 @@
         ansistrano_git_repo: git@github.com:Ioni14/ansistrano-test.git
         ansistrano_git_branch: "{{ git_branch }}"
         ansistrano_git_identity_key_path: "{{ playbook_dir }}/id_rsa"
+        ansistrano_before_symlink_shared_tasks_file: "{{ playbook_dir }}/deploy/before-symlink-shared.yml"
+        ansistrano_after_symlink_shared_tasks_file: "{{ playbook_dir }}/deploy/after-symlink-shared.yml"
     roles:
         - ansistrano.deploy

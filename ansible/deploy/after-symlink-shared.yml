@@ -1,0 +1,25 @@
+---
+-
+    name: Set up infra parameters
+    template:
+        src: "{{ playbook_dir }}/templates/.env.dist"
+        dest: "{{ ansistrano_release_path.stdout }}/.env"
+-
+    name: Launch docker stack
+    command: /snap/bin/docker-compose up -d --build
+    args:
+        chdir: "{{ ansistrano_release_path.stdout }}"
+    register: cmd_out
+-
+    debug: var=cmd_out.stdout_lines
+-
+    name: Install composer deps
+    command: /snap/bin/docker-compose exec php composer install -a
+    args:
+        chdir: "{{ ansistrano_release_path.stdout }}"
+-
+    name: Set folders/files rights to data
+    command: "/snap/bin/docker-compose exec php chmod -R 777 {{ ansistrano_release_path.stdout }}/{data,var}"
+    register: cmd_out
+-
+    debug: var=cmd_out.stdout_lines
